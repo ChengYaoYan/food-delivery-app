@@ -19,7 +19,6 @@ import {
   icons,
   images,
   FONTS,
-  constants,
   screenDescribes,
 } from '../constants';
 
@@ -195,12 +194,15 @@ const CustomDrawer = () => {
             paddingRight: 20,
             backgroundColor: 'transparent',
           },
+          overlayColor: 'transparent',
           sceneContainerStyle: {
             backgroundColor: 'transparent',
           },
           headerShown: false,
         }}
-        drawerContent={props => <CustomDrawerContent {...props} />}
+        drawerContent={props => {
+          return <CustomDrawerContent {...props} />;
+        }}
         initialRouteName="MainLayout">
         <Drawer.Screen name="MainLayout" component={MainLayout} />
       </Drawer.Navigator>
