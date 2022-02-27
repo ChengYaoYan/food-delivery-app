@@ -1,32 +1,25 @@
-const screens = {
-  main_layout: 'MainLayout',
-  home: 'Home',
-  search: 'Search',
-  cart: 'Cart',
-  favourite: 'Favourite',
-  notification: 'Notification',
-};
+import {screens} from './routes';
 
 const bottom_tabs = [
   {
     id: 0,
-    label: screens.home,
+    label: screens.Home,
   },
   {
     id: 1,
-    label: screens.search,
+    label: screens.Search,
   },
   {
     id: 2,
-    label: screens.cart,
+    label: screens.Cart,
   },
   {
     id: 3,
-    label: screens.favourite,
+    label: screens.Favourite,
   },
   {
     id: 4,
-    label: screens.notification,
+    label: screens.Notification,
   },
 ];
 
