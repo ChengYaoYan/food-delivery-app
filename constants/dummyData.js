@@ -1,4 +1,5 @@
-import {icons, images} from './';
+import icons from './icons';
+import images from './images';
 
 const myProfile = {
   name: 'ByProgrammers',

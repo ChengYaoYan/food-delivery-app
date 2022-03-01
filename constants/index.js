@@ -1,4 +1,4 @@
-import constants from './constants';
+import * as constant from './constant';
 import {screens, screenDescribes} from './routes';
 import theme, {COLORS, SIZES, FONTS} from './theme';
 import images from './images';
@@ -6,7 +6,8 @@ import icons from './icons';
 import dummyData from './dummyData';
 
 export {
-  constants,
+  constant,
+  screens,
   theme,
   COLORS,
   SIZES,
@@ -14,6 +15,5 @@ export {
   images,
   icons,
   dummyData,
-  screens,
   screenDescribes,
 };

@@ -97,7 +97,6 @@ const tags = [
 ];
 
 export default {
-  screens,
   bottom_tabs,
   delivery_time,
   ratings,
