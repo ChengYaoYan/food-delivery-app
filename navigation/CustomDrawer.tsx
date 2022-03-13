@@ -22,7 +22,7 @@ import {
   SCREEN_DESCRIBES,
 } from '../constants';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
-import {setSelectedTab} from '../features/tab/tabSlice';
+import {setSelectedTab} from '../features/tab/tab-slice';
 
 const Drawer = createDrawerNavigator();
 
