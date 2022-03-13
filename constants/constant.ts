@@ -1,25 +1,25 @@
-import {screens} from './routes';
+import {SCREENS} from './routes';
 
 const bottom_tabs = [
   {
     id: 0,
-    label: screens.Home,
+    label: SCREENS.Home,
   },
   {
     id: 1,
-    label: screens.Search,
+    label: SCREENS.Search,
   },
   {
     id: 2,
-    label: screens.Cart,
+    label: SCREENS.Cart,
   },
   {
     id: 3,
-    label: screens.Favourite,
+    label: SCREENS.Favourite,
   },
   {
     id: 4,
-    label: screens.Notification,
+    label: SCREENS.Notification,
   },
 ];
 

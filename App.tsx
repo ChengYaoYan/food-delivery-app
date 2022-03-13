@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Provider} from 'react-redux';
 
 import CustomDrawer from './navigation/CustomDrawer';
-import store from './features/store';
+import {store} from './app/store';
 
 const Stack = createStackNavigator();
 

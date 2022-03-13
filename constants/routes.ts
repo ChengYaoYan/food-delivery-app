@@ -1,0 +1,31 @@
+export enum SCREENS {
+  MainLayout = 'MainLayout',
+  Home = 'Home',
+  MyWallet = 'MyWallet',
+  Search = 'Search',
+  Cart = 'Cart',
+  Favourite = 'Favourite',
+  Notification = 'Notification',
+  Location = 'Location',
+  Coupon = 'Coupon',
+  Setting = 'Setting',
+  Porfile = 'Profile',
+  Help = 'Help',
+  Logout = 'Logout',
+}
+
+export enum SCREEN_DESCRIBES {
+  MainLayout = 'Main Layout',
+  Home = 'Home',
+  MyWallet = 'My Wallet',
+  Search = 'Search',
+  Cart = 'Cart',
+  Favourite = 'My Favourite',
+  Notification = 'Notification',
+  Location = 'Track Your Order',
+  Coupon = 'Coupons',
+  Setting = 'Settings',
+  Porfile = 'Invite a Friend',
+  Help = 'Help Center',
+  Logout = 'Logout',
+}

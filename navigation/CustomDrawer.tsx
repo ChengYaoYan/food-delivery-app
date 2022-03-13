@@ -10,7 +10,7 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import {connect, ConnectedProps} from 'react-redux';
+import {DrawerContentComponentProps} from '@react-navigation/drawer/lib/typescript/src/types';
 
 import {MainLayout} from '../screens';
 import {
@@ -19,32 +19,10 @@ import {
   icons,
   images,
   FONTS,
-  screenDescribes,
+  SCREEN_DESCRIBES,
 } from '../constants';
-import {AppDispatch, RootState} from '../features/store';
-import {TabActionType} from '../features/tab/reducer';
-import {DrawerContentComponentProps} from '@react-navigation/drawer/lib/typescript/src/types';
-
-function mapStateToProps(state: RootState) {
-  return {
-    selectedTab: state.tab.selectedTab,
-  };
-}
-
-function mapDispatchToProps(dispatch: AppDispatch) {
-  return {
-    setSelectedTab: (selectedTab: string) => {
-      return dispatch({
-        type: TabActionType.SET_SELECTED_TAB,
-        payload: {selectedTab},
-      });
-    },
-  };
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
+import {useAppDispatch, useAppSelector} from '../app/hooks';
+import {setSelectedTab} from '../features/tab/tabSlice';
 
 const Drawer = createDrawerNavigator();
 
@@ -82,13 +60,14 @@ const CustomDrawerItem: React.FC<{
   );
 };
 
-const CustomDrawerContent = (
-  props: DrawerContentComponentProps & PropsFromRedux,
-) => {
-  const {navigation, selectedTab, setSelectedTab} = props;
+const CustomDrawerContent = (props: DrawerContentComponentProps) => {
+  const {navigation} = props;
 
-  const pressHandler = (tabName: string) => {
-    setSelectedTab(tabName);
+  const selectedTab = useAppSelector(state => state.tab.selectedTab);
+  const dispatch = useAppDispatch();
+
+  const pressHandler = (tabName: `${SCREEN_DESCRIBES}`) => {
+    dispatch(setSelectedTab(tabName));
   };
 
   return (
@@ -159,27 +138,27 @@ const CustomDrawerContent = (
           }}>
           <CustomDrawerItem
             icon={icons.home}
-            label={screenDescribes.Home}
-            onPress={() => pressHandler(screenDescribes.Home)}
-            isFocus={selectedTab === screenDescribes.Home}
+            label={SCREEN_DESCRIBES.Home}
+            onPress={() => pressHandler(SCREEN_DESCRIBES.Home)}
+            isFocus={selectedTab === SCREEN_DESCRIBES.Home}
           />
           <CustomDrawerItem
             icon={icons.wallet}
-            label={screenDescribes.MyWallet}
-            onPress={() => pressHandler(screenDescribes.MyWallet)}
-            isFocus={selectedTab === screenDescribes.MyWallet}
+            label={SCREEN_DESCRIBES.MyWallet}
+            onPress={() => pressHandler(SCREEN_DESCRIBES.MyWallet)}
+            isFocus={selectedTab === SCREEN_DESCRIBES.MyWallet}
           />
           <CustomDrawerItem
             icon={icons.notification}
-            label={screenDescribes.Notification}
-            onPress={() => pressHandler(screenDescribes.Notification)}
-            isFocus={selectedTab === screenDescribes.Notification}
+            label={SCREEN_DESCRIBES.Notification}
+            onPress={() => pressHandler(SCREEN_DESCRIBES.Notification)}
+            isFocus={selectedTab === SCREEN_DESCRIBES.Notification}
           />
           <CustomDrawerItem
             icon={icons.favourite}
-            label={screenDescribes.Favourite}
-            onPress={() => pressHandler(screenDescribes.Favourite)}
-            isFocus={selectedTab === screenDescribes.Favourite}
+            label={SCREEN_DESCRIBES.Favourite}
+            onPress={() => pressHandler(SCREEN_DESCRIBES.Favourite)}
+            isFocus={selectedTab === SCREEN_DESCRIBES.Favourite}
           />
 
           {/** Line Divider */}
@@ -194,28 +173,28 @@ const CustomDrawerContent = (
 
           <CustomDrawerItem
             icon={icons.location}
-            label={screenDescribes.Location}
+            label={SCREEN_DESCRIBES.Location}
           />
           <CustomDrawerItem
             icon={icons.coupon}
-            label={screenDescribes.Coupon}
+            label={SCREEN_DESCRIBES.Coupon}
           />
           <CustomDrawerItem
             icon={icons.setting}
-            label={screenDescribes.Setting}
+            label={SCREEN_DESCRIBES.Setting}
           />
           <CustomDrawerItem
             icon={icons.profile}
-            label={screenDescribes.Porfile}
+            label={SCREEN_DESCRIBES.Porfile}
           />
-          <CustomDrawerItem icon={icons.help} label={screenDescribes.Help} />
+          <CustomDrawerItem icon={icons.help} label={SCREEN_DESCRIBES.Help} />
         </View>
 
         {/** Logout */}
         <View style={{marginBottom: SIZES.padding}}>
           <CustomDrawerItem
             icon={icons.logout}
-            label={screenDescribes.Logout}
+            label={SCREEN_DESCRIBES.Logout}
           />
         </View>
       </View>
@@ -223,7 +202,7 @@ const CustomDrawerContent = (
   );
 };
 
-const CustomDrawer = ({selectedTab, setSelectedTab}: PropsFromRedux) => {
+const CustomDrawer = () => {
   return (
     <View
       style={{
@@ -246,13 +225,7 @@ const CustomDrawer = ({selectedTab, setSelectedTab}: PropsFromRedux) => {
           headerShown: false,
         }}
         drawerContent={props => {
-          return (
-            <CustomDrawerContent
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
-              {...props}
-            />
-          );
+          return <CustomDrawerContent {...props} />;
         }}
         initialRouteName="MainLayout">
         <Drawer.Screen name="MainLayout" component={MainLayout} />
@@ -261,4 +234,4 @@ const CustomDrawer = ({selectedTab, setSelectedTab}: PropsFromRedux) => {
   );
 };
 
-export default connector(CustomDrawer);
+export default CustomDrawer;
