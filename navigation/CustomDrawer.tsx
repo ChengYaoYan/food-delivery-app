@@ -10,8 +10,7 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import {connect} from 'react-redux';
-import Reactotron from 'reactotron-react-native';
+import {connect, ConnectedProps} from 'react-redux';
 
 import {MainLayout} from '../screens';
 import {
@@ -22,6 +21,30 @@ import {
   FONTS,
   screenDescribes,
 } from '../constants';
+import {AppDispatch, RootState} from '../features/store';
+import {TabActionType} from '../features/tab/reducer';
+import {DrawerContentComponentProps} from '@react-navigation/drawer/lib/typescript/src/types';
+
+function mapStateToProps(state: RootState) {
+  return {
+    selectedTab: state.tab.selectedTab,
+  };
+}
+
+function mapDispatchToProps(dispatch: AppDispatch) {
+  return {
+    setSelectedTab: (selectedTab: string) => {
+      return dispatch({
+        type: TabActionType.SET_SELECTED_TAB,
+        payload: {selectedTab},
+      });
+    },
+  };
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const Drawer = createDrawerNavigator();
 
@@ -29,7 +52,7 @@ const CustomDrawerItem: React.FC<{
   label: string;
   icon: ImageSourcePropType;
   onPress?: any;
-  isFocus?: any;
+  isFocus?: boolean;
 }> = ({label, icon, onPress, isFocus}) => {
   return (
     <TouchableOpacity
@@ -59,11 +82,13 @@ const CustomDrawerItem: React.FC<{
   );
 };
 
-const CustomDrawerContent = (props: any) => {
-  const {navigation, selectedTab, setSelectedTabs} = props;
+const CustomDrawerContent = (
+  props: DrawerContentComponentProps & PropsFromRedux,
+) => {
+  const {navigation, selectedTab, setSelectedTab} = props;
 
   const pressHandler = (tabName: string) => {
-    setSelectedTabs(tabName);
+    setSelectedTab(tabName);
   };
 
   return (
@@ -198,13 +223,7 @@ const CustomDrawerContent = (props: any) => {
   );
 };
 
-const CustomDrawer = ({
-  selectedTab,
-  setSelectedTabs,
-}: {
-  selectedTab: any;
-  setSelectedTabs: any;
-}) => {
+const CustomDrawer = ({selectedTab, setSelectedTab}: PropsFromRedux) => {
   return (
     <View
       style={{
@@ -230,7 +249,7 @@ const CustomDrawer = ({
           return (
             <CustomDrawerContent
               selectedTab={selectedTab}
-              setSelectedTabs={setSelectedTabs}
+              setSelectedTab={setSelectedTab}
               {...props}
             />
           );
@@ -242,18 +261,4 @@ const CustomDrawer = ({
   );
 };
 
-function mapStateToProps(state: any) {
-  return {
-    selectedTab: state.tabReducer.selectedTab,
-  };
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return {
-    setSelectedTabs: (selectedTab: any) => {
-      return dispatch({type: 'SET_SELECTED_TAB ', payload: selectedTab});
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CustomDrawer);
+export default connector(CustomDrawer);

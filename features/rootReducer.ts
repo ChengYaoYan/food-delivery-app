@@ -1,7 +1,9 @@
 import {combineReducers} from '@reduxjs/toolkit';
 
-import tabReducer from './tab/reducer';
+import tab from './tab/reducer';
+import date from './Date/reducer';
 
 export default combineReducers({
-  tabReducer,
+  tab,
+  date,
 });
