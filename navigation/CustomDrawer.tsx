@@ -174,20 +174,33 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           <CustomDrawerItem
             icon={icons.location}
             label={SCREEN_DESCRIBES.Location}
+            onPress={() => pressHandler(SCREEN_DESCRIBES.Location)}
+            isFocus={selectedTab === SCREEN_DESCRIBES.Location}
           />
           <CustomDrawerItem
             icon={icons.coupon}
             label={SCREEN_DESCRIBES.Coupon}
+            onPress={() => pressHandler(SCREEN_DESCRIBES.Coupon)}
+            isFocus={selectedTab === SCREEN_DESCRIBES.Coupon}
           />
           <CustomDrawerItem
             icon={icons.setting}
             label={SCREEN_DESCRIBES.Setting}
+            onPress={() => pressHandler(SCREEN_DESCRIBES.Setting)}
+            isFocus={selectedTab === SCREEN_DESCRIBES.Setting}
           />
           <CustomDrawerItem
             icon={icons.profile}
             label={SCREEN_DESCRIBES.Porfile}
+            onPress={() => pressHandler(SCREEN_DESCRIBES.Porfile)}
+            isFocus={selectedTab === SCREEN_DESCRIBES.Porfile}
           />
-          <CustomDrawerItem icon={icons.help} label={SCREEN_DESCRIBES.Help} />
+          <CustomDrawerItem
+            icon={icons.help}
+            label={SCREEN_DESCRIBES.Help}
+            onPress={() => pressHandler(SCREEN_DESCRIBES.Help)}
+            isFocus={selectedTab === SCREEN_DESCRIBES.Help}
+          />
         </View>
 
         {/** Logout */}
