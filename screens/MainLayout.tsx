@@ -20,6 +20,11 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import {useDrawerProgress} from '@react-navigation/drawer';
+import Home from './Home';
+import Cart from './Cart';
+import Notification from './Notification';
+import Search from './Search';
+import Favourite from './Favourite';
 
 import {Header} from '../components';
 import {useAppSelector, useAppDispatch} from '../app/hooks';
@@ -30,8 +35,11 @@ import {
   SIZES,
   SCREEN_DESCRIBES,
   FONTS,
+  SCREENS,
 } from '../constants';
 import {setSelectedTab} from '../features/tab/tab-slice';
+import {FlatList} from 'react-native-gesture-handler';
+import constant from '../constants/constant';
 
 const TabButton: React.FC<{
   label: SCREEN_DESCRIBES;
@@ -106,6 +114,7 @@ const MainLayout = () => {
   const progress = useDrawerProgress();
   const selectedTab = useAppSelector(state => state.tab.selectedTab);
   const dispatch = useAppDispatch();
+  const flatListRef = React.useRef<FlatList>(null);
 
   // Reanimated Shared Value
   const homeTabFlex = useSharedValue(FLEX_ORIGINAL_VALUE);
@@ -222,6 +231,10 @@ const MainLayout = () => {
 
   React.useEffect(() => {
     if (selectedTab === SCREEN_DESCRIBES.Home) {
+      flatListRef.current?.scrollToIndex({
+        index: 0,
+        animated: false,
+      });
       homeTabFlex.value = FLEX_TARGET_VALUE;
       homeTabColor.value = COLORS.primary;
     } else {
@@ -230,6 +243,10 @@ const MainLayout = () => {
     }
 
     if (selectedTab === SCREEN_DESCRIBES.Search) {
+      flatListRef.current?.scrollToIndex({
+        index: 1,
+        animated: false,
+      });
       searchTabFlex.value = FLEX_TARGET_VALUE;
       searchTabColor.value = COLORS.primary;
     } else {
@@ -238,6 +255,10 @@ const MainLayout = () => {
     }
 
     if (selectedTab === SCREEN_DESCRIBES.Cart) {
+      flatListRef.current?.scrollToIndex({
+        index: 2,
+        animated: false,
+      });
       cartTabFlex.value = FLEX_TARGET_VALUE;
       cartTabColor.value = COLORS.primary;
     } else {
@@ -246,6 +267,10 @@ const MainLayout = () => {
     }
 
     if (selectedTab === SCREEN_DESCRIBES.Favourite) {
+      flatListRef.current?.scrollToIndex({
+        index: 3,
+        animated: false,
+      });
       favouriteTabFlex.value = FLEX_TARGET_VALUE;
       favouriteTabColor.value = COLORS.primary;
     } else {
@@ -254,6 +279,10 @@ const MainLayout = () => {
     }
 
     if (selectedTab === SCREEN_DESCRIBES.Notification) {
+      flatListRef.current?.scrollToIndex({
+        index: 4,
+        animated: false,
+      });
       notificationTabFlex.value = FLEX_TARGET_VALUE;
       notificationTabColor.value = COLORS.primary;
     } else {
@@ -301,7 +330,31 @@ const MainLayout = () => {
         style={{
           flex: 1,
         }}>
-        <Text>hello</Text>
+        <FlatList
+          ref={flatListRef}
+          horizontal
+          scrollEnabled={false}
+          pagingEnabled
+          snapToAlignment="center"
+          showsHorizontalScrollIndicator={false}
+          data={constant.bottom_tabs}
+          keyExtractor={item => `${item.id}`}
+          renderItem={({item}) => {
+            return (
+              <View
+                style={{
+                  width: SIZES.width,
+                  height: SIZES.height,
+                }}>
+                {item.label === SCREENS.Home && <Home />}
+                {item.label === SCREENS.Search && <Search />}
+                {item.label === SCREENS.Cart && <Cart />}
+                {item.label === SCREENS.Favourite && <Favourite />}
+                {item.label === SCREENS.Notification && <Notification />}
+              </View>
+            );
+          }}
+        />
       </View>
 
       {/** Footer */}
