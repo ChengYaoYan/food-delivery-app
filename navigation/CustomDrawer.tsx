@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   ImageSourcePropType,
+  GestureResponderEvent,
 } from 'react-native';
 import {
   createDrawerNavigator,
@@ -27,9 +28,9 @@ import {setSelectedTab} from '../features/tab/tab-slice';
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerItem: React.FC<{
-  label: string;
+  label: SCREEN_DESCRIBES;
   icon: ImageSourcePropType;
-  onPress?: any;
+  onPress?: (event: GestureResponderEvent) => void;
   isFocus?: boolean;
 }> = ({label, icon, onPress, isFocus}) => {
   return (
